@@ -34,6 +34,12 @@ public class Main {
         locations.get(5).addExit("W",2);
         //locations.get(5).addExit("Q",0);
 
+        Map<String,String> vocabulary = new HashMap<>();
+        vocabulary.put("WEST","W");
+        vocabulary.put("SOUTH","S");
+        vocabulary.put("NORTH","N");
+        vocabulary.put("EAST","E");
+        vocabulary.put("QUIT","Q");
 
         int loc = 1;
         while(true) {
@@ -49,14 +55,28 @@ public class Main {
             System.out.println();
 
             String userCommand = scanner.nextLine().toUpperCase();
-            String[] userCommandArray = userCommand.split("\\s+");
-            int lastWordIndex = userCommandArray.length-1;
-            String directionChar = "" + userCommandArray[lastWordIndex].charAt(0);
-            if(exits.containsKey(directionChar)) {
-                loc = exits.get(directionChar);
+            if(userCommand.length()>1) {
+                String[] userCommandArray = userCommand.split("\\s+");
+                for(String s : userCommandArray) {
+                    if(vocabulary.containsKey(s)) {
+                        userCommand = vocabulary.get(s);
+                        break;
+                    }
+                }
+            }
+            if(exits.containsKey(userCommand)){
+                loc = exits.get(userCommand);
             } else {
                 System.out.println("You cannot go in that direction");
             }
+
+//            int lastWordIndex = userCommandArray.length-1;
+//            String directionChar = "" + userCommandArray[lastWordIndex].charAt(0);
+//            if(exits.containsKey(directionChar)) {
+//                loc = exits.get(directionChar);
+//            } else {
+//                System.out.println("You cannot go in that direction");
+//            }
         }
     }
 }
